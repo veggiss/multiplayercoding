@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Game from './components/game';
+import Progression from './components/progression';
+import Question from './components/question';
+import Answer from './components/answer';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    new Game();
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="centerStuff">
+        <div className="grid-container">
+          <div className="question">
+            <Question/>
+          </div>
+          <div className="answer">
+            <Answer/>
+          </div>
+          <div className="progression">
+            <Progression/>
+          </div>
+        </div>
       </div>
     );
   }
