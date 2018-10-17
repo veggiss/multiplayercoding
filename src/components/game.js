@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
-import {Client} from 'colyseus.js';
-
-const MyContext = React.createContext();
+import '../App.css';
+import {initClient, joinRoom} from '../components/websocket';
+import Progression from '../components/progression';
+import Question from '../components/question';
+import Answer from '../components/answer';
 
 class Game extends Component {
-  constructor(){
+  constructor() {
     super();
-
-    const endpoint = (window.location.hostname.indexOf("herokuapp") === -1)
-      ? "ws://localhost:3030" // - Local
-      : `${window.location.protocol.replace("http", "ws")}//${window.location.hostname}`;
-
-    this.colyseus = new Client(endpoint);
-    this.room = this.colyseus.join('game');
+    initClient();
+    joinRoom();
   }
 
   render() {
     return (
-      <MyContext.Provider value={{
-        room: this.room
-      }}>
-        {this.props.children}
-      </MyContext.Provider>
+      <div className="centerStuff">
+        <div className="grid-container">
+          <div className="question">
+            <Question/>
+          </div>
+          <div className="answer">
+            <Answer/>
+          </div>
+          <div className="progression">
+            <Progression/>
+          </div>
+        </div>
+      </div>
     );
   }
 }

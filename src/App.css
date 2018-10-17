@@ -7,16 +7,19 @@
 
 .grid-container {
   display: grid;
-  height: 100%;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.7fr 1.3fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 10px 10px;
   grid-template-areas: "progression progression" "question answer";
 }
 
+.aceHeight {
+  height: 0px;
+}
+
 .progression {
   grid-area: progression;
-  text-align: center;
+  margin: 0px;
 }
 
 .question { 

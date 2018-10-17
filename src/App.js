@@ -1,32 +1,20 @@
 import React, { Component } from 'react';
-import './App.css';
+import { Route, NavLink, HashRouter } from 'react-router-dom';
 import Game from './components/game';
-import Progression from './components/progression';
-import Question from './components/question';
-import Answer from './components/answer';
+import Home from './components/home';
+import Header from './components/header';
 
 class App extends Component {
-  constructor() {
-    super();
-
-    new Game();
-  }
-
   render() {
     return (
-      <div className="centerStuff">
-        <div className="grid-container">
-          <div className="question">
-            <Question/>
-          </div>
-          <div className="answer">
-            <Answer/>
-          </div>
-          <div className="progression">
-            <Progression/>
+      <HashRouter>
+        <div>
+          <Header />
+          <div className='content'>
+            <Route exact path='/play' component={Game}/>
           </div>
         </div>
-      </div>
+      </HashRouter>
     );
   }
 }
