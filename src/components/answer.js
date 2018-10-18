@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import {Button, FormGroup, FormControl} from 'react-bootstrap';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+//import NotifierGenerator from "./alert";
+import {Button} from 'react-bootstrap';
 import {getRoom} from './websocket';
-import brace from 'brace';
 import AceEditor from 'react-ace';
+import 'brace/ext/language_tools';
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
 
@@ -18,11 +21,13 @@ class Answer extends Component {
 	}
 
 	handleResponse = msg => {
-		if (msg.answer === true) console.log("You answered correct");
-		if (msg.answer === false) console.log("You answered wrong");
+		if (msg.answer === true) NotificationManager.success('All unit tests passed! Get ready for the next one!', 'Success', 3000);
+		if (msg.answer === false) NotificationManager.error('Solution did not pass unit tests! Please try again.', 'Failed', 3000);
 
 		if (msg.startCode) {
-			this.editor.current.editor.setValue(msg.startCode, 1);
+			if (this.editor.current.editor !== null) {
+				this.editor.current.editor.setValue(msg.startCode, 1);
+			}
 		}
 	}
 
@@ -37,10 +42,11 @@ class Answer extends Component {
 	render() {
 	  return (
 	  	<div>
-	    	<h4>Answer</h4>
+	    	<NotificationContainer />
 	    	<div className="aceHeight">
 				<AceEditor
 					ref={this.editor}
+					editorProps={{$blockScrolling: Infinity}}
 					mode="javascript"
 					theme="monokai"
 					name="blah2"
@@ -52,10 +58,11 @@ class Answer extends Component {
 					showGutter={true}
 					highlightActiveLine={true}
 					setOptions={{
-					enableBasicAutocompletion: false,
+					enableBasicAutocompletion: true,
 					enableLiveAutocompletion: true,
 					enableSnippets: false,
 					showLineNumbers: true,
+					blockScrolling: Infinity,
 					tabSize: 2,
 				}}/>
 		    	<Button onClick={this.checkAnswer} bsStyle="primary" bsSize="small" block>

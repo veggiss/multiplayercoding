@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import user from './util/users';
+
+window.user = user; 
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

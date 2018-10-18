@@ -1,31 +1,45 @@
 .centerStuff {
   margin-left: 10%;
   margin-right: 10%;
-  margin-top: 10%;
-  margin-bottom: 10%;
 }
 
-.grid-container {
+.question {
+  padding-top: 10px;
+  font-size: 17px;
+}
+
+.grid-profile {
+  margin-left: 20%;
+  margin-right: 20%;
   display: grid;
-  grid-template-columns: 0.7fr 1.3fr;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 10px 10px;
-  grid-template-areas: "progression progression" "question answer";
+  max-width: 700px;
+  height: 100%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 0.25fr 0.25fr;
+  grid-gap: 1px 1px;
+  grid-template-areas: "profileImg userDetails userDetails userDetails" "stats level wins xp";
+  background-color: #edeeef;
+  padding: 10px;
 }
 
-.aceHeight {
-  height: 0px;
+.userDetails { grid-area: userDetails; padding-left: 60px;}
+
+.level { 
+  grid-area: level; 
+  border-right: 1px solid gray;
+  text-align: center;
 }
 
-.progression {
-  grid-area: progression;
-  margin: 0px;
-}
+.wins { grid-area: wins; border-right: 1px solid gray; text-align: center;}
 
-.question { 
-  grid-area: question;
-}
+.xp { grid-area: xp; text-align: center;}
 
-.answer { 
-  grid-area: answer;
+.profileImg { grid-area: profileImg;}
+
+.stats { grid-area: stats; border-right: 1px solid gray; text-align: center;}
+
+.UserAvatar {
+  vertical-align: middle;
+  width: 150px;
+  height: 150px;
 }

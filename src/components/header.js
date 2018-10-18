@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 //import Game from './components/game';
 import { NavLink } from 'react-router-dom';
-import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap';
+import {Navbar, Nav, NavItem} from 'react-bootstrap';
 
 class Header extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <div>
@@ -25,9 +21,9 @@ class Header extends Component {
               </NavItem>
             </Nav>
             <Nav pullRight>
-              <NavItem eventKey={1}>
-                Profile
-              </NavItem>
+              <Navbar.Brand>
+                <NavLink to='/profile'>Profile</NavLink>
+              </Navbar.Brand>
             </Nav>
           </Navbar.Collapse>
         </Navbar>;

@@ -5,7 +5,7 @@ const Mocha = require('mocha');
 let mocha = new Mocha({ui:'bdd'});
 
 const questions = [{
-  text: 'Write a function called add that returns the addition of two parameters.',
+  text: `Write a <code>function</code> called add that <code>return</code> the addition of two parameters.`,
   answer: `it('correctly calculates the sum of 1 and 3', () => {
             assert.equal(add(1, 3), 4);
           });
@@ -14,25 +14,26 @@ const questions = [{
             assert.equal(add(1000, 5), 1005);
           });`,
   startCode: `function add(a, b) {
-  }`
+
+}`
 }, {
-  text: 'What operating system was founded by Linus Torvalds? Pass it as a string variable called torvalds',
+  text: 'What operating system was founded by Linus Torvalds? Create a <code>variable</code> named torvalds equals your answer. Example: <code>let bill = "windows";</code>',
   answer:  `it('correctly outputs a string', () => {
             assert.equal(torvalds, 'linux');
           });`,
-  startCode: ``
+  startCode: `//Good luck`
 }, {
-  text: 'Create a function called oddCount, given a number n, return the number of positive odd numbers below n.',
-  answer:  `it('correctly filters list', () => {
-            assert.deepEqual(oddCount(7), [1, 3, 5]);
+  text: 'Create a <code>function</code> called <code>oddCount</code>, given a number n, <code>return</code> the number of positive <code>odd</code> numbers below n.',
+  answer:  `it('correctly filters list 1', () => {
+              assert.deepEqual([1, 3, 5], oddCount(7));
           });
 
-          it('correctly filters list', () => {
-            assert.equal(oddCount(15), [1, 3, 5, 7, 9, 11, 13]);
+          it('correctly filters list 2', () => {
+            assert.deepEqual([1, 3, 5, 7, 9, 11, 13], oddCount(15));
           });`,
   startCode: `function oddCount(n) {
-    return n;
-  }`
+  return n;
+}`
 }];
 
 class Game extends Room {
@@ -81,7 +82,6 @@ class Game extends Room {
     if (this.state.players[client.id].index < questions.length - 1) {
       this.state.players[client.id].index++;
       this.state.players[client.id].progress = (this.state.players[client.id].index / questions.length) * 100;
-      this.send(client, {answer: true});
       this.nextQuestion(client);
     } else if (questions.length >= this.state.players[client.id].index) {
       if (this.state.players[client.id].progress < 100) {
@@ -93,20 +93,24 @@ class Game extends Room {
         else str = 'Good work! You placed second!';
         this.send(client, {question: str});
       }
-    } else {
-      this.send(client, {answer: false});
     }
   }
 
   checkAnswer(client, data) {
     let self = this;
     try {
-      mocha = new Mocha({ui:"bdd", reporter: 'json', enableTimeouts: true, timeout: 10});
+      mocha = new Mocha({ui:"bdd", reporter: 'json', enableTimeouts: true, timeout: 1000});
       this.pseudoFile(mocha, {assert:require("assert")}, `${data.checkAnswer} ${questions[this.state.players[client.id].index].answer}`);
       mocha.run()
         .on('end', function(e) {
+          console.log('FAILURES: ', this.testResults.failures);
+          self.send(client, {output: true, failures: this.testResults.failures, passes: this.testResults.passes});
+
           if (this.testResults.stats.failures == 0) {
             self.updateAnswer(client, data);
+            self.send(client, {answer: true});
+          } else {
+            self.send(client, {answer: false});
           }
         });
     } catch (err) {
