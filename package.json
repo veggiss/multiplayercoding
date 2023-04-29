@@ -4,11 +4,11 @@
   "private": true,
   "dependencies": {
     "bootstrap": "^4.1.3",
-    "colyseus": "^0.9.17",
+    "colyseus": "^0.14.24",
     "colyseus.js": "^0.9.14",
     "express": "^4.16.4",
     "http": "0.0.0",
-    "mocha": "^5.2.0",
+    "mocha": "^10.2.0",
     "random-username-generator": "^1.0.4",
     "react": "^16.5.2",
     "react-ace": "^6.2.0",
